@@ -11,9 +11,8 @@
   session_start();
 
   // isset verifica si existe una variable o eso creo xd
-  if(isset($_SESSION['id'])){
-echo'asd';
-    header('location: ../controller/redirec.php');
+  if(isset($_SESSION['idUsuario'])){
+    header('location:controller/redirec.php');
   }
 
 ?>

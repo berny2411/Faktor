@@ -78,5 +78,12 @@
           $res = str_replace($buscar, $reemplazar, $string);
           return $res;
         }
+
+         public function consultaArregloLogin($consulta)
+        {
+          # mysqli_fetch_array Obtiene una fila de resultados como un array asociativo, numérico, o ambos
+          return mysqli_fetch_array($this->mysqli->query($consulta));
+        }
+        
     } // End Class
 ?>

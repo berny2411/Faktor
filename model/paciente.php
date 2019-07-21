@@ -1,8 +1,9 @@
 <?php
+#incluimos el archivo conexion.php
  require_once('conexion.php');
-
+#Creacion de la clase Paciente con una herencia de la clase Conexion
  class Paciente extends Conexion {
-
+      #Funcion que permite agregarlos datos a la tabla paciente 
       public function addPaciente ($nombre, $apellidop, $apellidom, $hospital, $chospital, $numtel, $email)
       {
       	parent::conectar();
@@ -13,7 +14,7 @@
 
 
       }
-
+      #Funcion que permite hacer una consulta general a la tabla paciente 
       public  function getListPaciente(){
             parent::conectar();
 
@@ -22,7 +23,19 @@
             return $extraido;
 
       }
-
+      # Funcion que permite hacer una consulta especifica por medio del id
+       public function getUserById($id=NULL){
+            parent::conectar();
+                  if(!empty($id)){
+                        $query  ="SELECT * FROM paciente WHERE idPaciente=".$id;
+                        $result =parent::consultaArreglo($query);
+                        return $result;
+                  }else{
+                        return false;
+                  }
+                  parent::cerrar();
+            }
+      #Funcion que permite modificar los datos de la tabla paciente      
       public function updatePaciente($id,$nombre,$apellidoP,$apellidoM,$hospital,$cuartoHospital,$numTel,$email){
       	parent::conectar();
 
@@ -30,22 +43,22 @@
             $apellidoP = parent::filtrar($apellidoP);
             $apellidoM = parent::filtrar($apellidoM);
             $hospital = parent::filtrar($hospital);
-            $cuartoHospital= parent::filtrar($cuartoHospital)
+            $cuartoHospital= $cuartoHospital;
             $numTel = parent::filtrar($numTel);
-            $email = parent::filtrar($email);
+            $email = $email;
 
-      	parent::query("UPDATE Paciente SET nombrePaciente='$nombre', apellidoPatPaciente='$apellidoP', apellidoMatPaciente='$apellidoM',hospital='$hospital',cuartoHospital='$cuartoHospital',numTelefonoPaciente=''$numTel,emailPaciente='$email' WHERE idPaciente= '$id'");
+      	parent::query("UPDATE paciente SET nombrePaciente='$nombre', apellidoPatPaciente='$apellidoP', apellidoMatPaciente='$apellidoM', hospital='$hospital', cuartoHospital='$cuartoHospital',numTelefonoPaciente='$numTel',emailPaciente='$email' WHERE idPaciente= '$id'");
 
       	parent::cerrar();
 
 
       }
-
-      public function deleteAseguradora($id){
+      #Funcion que permite borrar una fila de la tabla paciente por medio del id 
+      public function deletePaciente($id){
 
       parent::conectar();
 
-      parent::query("DELETE FROM Aseguradora WHERE id='$id'");
+      parent::query("DELETE FROM paciente WHERE idPaciente=$id");
 
       parent::cerrar();
       }
